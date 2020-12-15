@@ -46,11 +46,18 @@ def solver():
             plan[link][2]['date'] += datetime.timedelta(days=int(result_2))
             plan[link][3]['date'] += datetime.timedelta(days=int(result_3))
             plan[link][4]['date'] += datetime.timedelta(days=int(result_4))
-    #sql = f'SELECT * FROM plan'
-    #conn = sqlite3.connect('database.db')
-    #data = conn.execute(sql).fetchall()
-    #conn.close()
-    #return data
+    #print(plan)
+    for label in frm_4.grid_slaves():
+        if int(label.grid_info()["row"]) >= 0:
+            label.destroy()
+    for link in plan:
+        for element in plan[link]:
+            if element == 1:
+                lbl = tk.Label(master=frm_4, text=f"Звено №_{link} элемент №_{element} Название: {plan[link][element]['name']}: Дата замены: {plan[link][element]['date'].strftime('%d.%m.%y')}")
+                lbl.grid(row=link, column=element, padx=5, pady=5, sticky='n')
+            else:
+                lbl = tk.Label(master=frm_4, text=f"элемен №_{element} Название: {plan[link][element]['name']}: Дата замены: {plan[link][element]['date'].strftime('%d.%m.%y')}")
+                lbl.grid(row=link, column=element, padx=5, pady=5, sticky='n')
 
 
 def run():
@@ -469,5 +476,9 @@ entry_3.grid(row=3, column=1)
 label_4 = tk.Button(master=frm_3, text="Добавить компонент", command=run)
 label_4.grid(row=4, column=1, sticky="e")
 
+
+# Вывод плана замены оборудования
+frm_4 = tk.Frame(master=window, relief=tk.SUNKEN, borderwidth=3)
+frm_4.grid(row=3, column=0, columnspan=3, padx=5, pady=5, sticky='nsew')
 
 window.mainloop()
