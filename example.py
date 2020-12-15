@@ -4,6 +4,23 @@ import os
 import sqlite3
 
 
+def solver():
+    data = {}
+    print('Будет расчет замены элементов')
+    print(shema_data)
+    number = len(shema_data.keys())
+    p = float(ent_reliability.get())
+    p_i = p**(1/number)
+    print(p, p_i)
+    for key, value in shema_data.items():
+        if value[0] == '1':
+            data[key] = p_i
+        elif value[0] == '2':
+            data[key] = (2-(4-4*p)**(1/2))/2
+        elif value[0] == '3':
+            data[key] = (2-(4-4*p)**(1/2))/2
+
+
 def run():
     global options_1
     global options_2
@@ -11,7 +28,6 @@ def run():
     global options_4
     os.system('add.py')
     data = my_reload()
-    print(data)
     options_1, options_2, options_3, options_4 = data
     om_1 = tk.OptionMenu(frm_con, variable_1, *options_1)
     om_1.grid(row=2, column=0, padx=5, pady=5, sticky='n')
@@ -305,12 +321,8 @@ ent_reliability = tk.Entry(master=frm_1, width=50, relief=tk.SUNKEN, borderwidth
 ent_reliability.grid(row=1, column=1)
 
 
-def calculate():
-    print('Будет расчет замены элементов')
-    print(shema_data)
 
-
-btn_reliability = tk.Button(master=frm_1, text="Вывод плана замены оборудования", command=calculate)
+btn_reliability = tk.Button(master=frm_1, text="Вывод плана замены оборудования", command=solver)
 btn_reliability.grid(row=1, column=2)
 
 
